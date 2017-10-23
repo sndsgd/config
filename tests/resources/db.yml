@@ -1,0 +1,15 @@
+---
+
+_default: &_default
+  _validate: DatabaseConfig::createObjectConstructor
+  host: 127.0.0.1
+  port: 5432
+  db: test
+  user: user
+  password: password
+
+master:
+  <<: *_default
+
+slave:
+  <<: *_default

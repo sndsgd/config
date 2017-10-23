@@ -1,0 +1,73 @@
+#!/usr/bin/env php
+<?php
+
+gc_disable();
+
+# locate and include the appropriate autoload script
+(function() {
+    $search = [
+        __DIR__."/../../../autoload.php",
+        __DIR__."/../vendor/autoload.php",
+    ];
+
+    foreach ($search as $path) {
+        if (file_exists($path)) {
+            require $path;
+            return;
+        }
+    }
+
+    throw new Exception("failed to locate autoload script");
+})();
+
+# an array of the valid command names
+# used when injecting the default command into the executed bash command
+$commands = [
+    \sndsgd\config\command\GenerateCommand::NAME,
+];
+
+# symfony/console does'nt allow options or arguments for the default command
+# this inserts the default command when no other command is present
+$argv = hackArguments($argv, ...$commands);
+$argc = count($argv);
+$_SERVER["argv"] = $argv;
+$_SERVER["argc"] = $argc;
+
+$command = new \sndsgd\config\command\GenerateCommand();
+$console = new \Symfony\Component\Console\Application("config-generate", "1.0.0");
+$console->add($command);
+$console->setDefaultCommand($command->getName());
+$console->run();
+
+/**
+ * Hack the command line arguments to include the default command if no
+ * command is present
+ *
+ * Allows for using options and arguments with the default command
+ *
+ * @param array<string> $argv The bash command line arguments
+ * @param array<string> $commands The available commands
+ * @return array<string> The updated argument list
+ */
+function hackArguments(array $argv, string ...$commands): array
+{
+    list($first, $second, $third) = array_pad($argv, 3, "");
+
+    # determine the index or where the command should be
+    if (\sndsgd\Str::endsWith($first, "php")) {
+        $test = $third;
+        $index = 2;
+    } else {
+        $test = $second;
+        $index = 1;
+    }
+
+    if (
+        !in_array($test, $commands, true) ||
+        \sndsgd\Str::beginsWith($test, "-")
+    ) {
+        array_splice($argv, $index, 0, \sndsgd\config\command\GenerateCommand::NAME);
+    }
+
+    return $argv;
+}

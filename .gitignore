@@ -1,0 +1,5 @@
+build
+bin/dev.php
+composer.lock
+tests/resources/results
+vendor

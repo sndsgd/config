@@ -1,0 +1,10 @@
+---
+
+# paths to search for assets, relative to the version root
+search.paths:
+  - "/src"
+  - "/vendor/sndsgd/asset/src"
+
+# the location of the generated asset includes file, relative to the version root
+# contains a map of asset group names and the associated compiled files
+cache.path: "/cache/assets/groups.php"

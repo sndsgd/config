@@ -1,0 +1,24 @@
+---
+
+# the path to generated routes files, relative to the version root
+# for each host, two files may exist:
+# - `{host}.php`: the routes definition
+# - `{host}.php.cached`: the precompiled regex for fast route matching
+cache.directory: /cache/dispatcher
+
+# paths to search for action classes in
+# these should be relative to the application root directory
+action.search.paths:
+  - src/
+  - vendor/sndsgd/module-media/src
+
+# a map of console commands to action classes
+# used to determine which action to execute when running actions from cli
+console.action.path: data/dispatcher.console.actions
+
+# the action class that is dispatched when an http request is made
+# using a method that does not have a registered action
+action.class.method.not.allowed: app\error\action\MethodNotAllowedAction
+
+# the action class that is executed when the request doesn't match an action
+action.class.not.found: app\error\action\NotFoundAction

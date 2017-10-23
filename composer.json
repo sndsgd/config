@@ -1,0 +1,32 @@
+{
+    "name": "sndsgd/config",
+    "description": "Simple configuration for PHP",
+    "type": "library",
+    "homepage": "https://github.com/sndsgd/config",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Russell B",
+            "homepage": "http://snds.gd/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/sndsgd/config/issues",
+        "source": "https://github.com/sndsgd/config/tree/master"
+    },
+    "name": "sndsgd/config",
+    "require": {
+        "php": ">=7.1",
+        "ext-yaml": "*",
+        "sndsgd/fs": ">=0.4.3",
+        "symfony/console": ">=3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "sndsgd\\config\\": "src/"
+        }
+    },
+    "bin": [
+        "bin/config-generate"
+    ]
+}

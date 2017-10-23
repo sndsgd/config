@@ -1,0 +1,17 @@
+---
+
+_defaults: &_defaults
+  _validate: DatabaseConfig::createObjectConstructor
+  port: 5432
+  db: test
+  user: user
+  password: password
+
+# overwrite the defaults with other hosts
+master:
+  <<: *_defaults
+  host: 10.0.1.10
+
+slave:
+  <<: *_defaults
+  host: 10.0.1.11
