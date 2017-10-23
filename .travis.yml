@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - 7.1
+
+before_install:
+  - printf "\n" | pecl install yaml
+
+install:
+  - composer install --no-interaction --prefer-source --dev
+
+script:
+  - vendor/bin/phpunit --coverage-clover build/coverage/clover.xml
+
+after_script:
+  - vendor/bin/coveralls -v

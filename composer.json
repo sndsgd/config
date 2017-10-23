@@ -21,6 +21,10 @@
         "sndsgd/fs": ">=0.4.3",
         "symfony/console": ">=3.2"
     },
+    "require-dev": {
+        "satooshi/php-coveralls": "~1.0",
+        "phpunit/phpunit": "~5"
+    },
     "autoload": {
         "psr-4": {
             "sndsgd\\config\\": "src/"

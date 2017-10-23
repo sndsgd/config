@@ -4,14 +4,8 @@ namespace sndsgd\config;
 
 class GeneratorTest extends \PHPUnit_Framework_TestCase
 {
-    protected $searchDir;
-    protected $resultDir;
-
-    public function setup()
-    {
-        $this->searchDir = realpath(__DIR__."/../resources");
-        $this->resultDir = realpath(__DIR__."/../resources/results");
-    }
+    protected $searchDir = __DIR__."/../resources";
+    protected $resultDir = __DIR__."/../resources/results";
 
     public function testWrite()
     {
