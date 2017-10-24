@@ -21,7 +21,10 @@ class Config
      */
     protected $createDefinitions;
 
-    public function __construct(array $rawValues, array $createDefinitions)
+    public function __construct(
+        array $rawValues = [],
+        array $createDefinitions = []
+    )
     {
         $this->rawValues = $rawValues;
         $this->createDefinitions = $createDefinitions;
@@ -49,6 +52,25 @@ class Config
         }
 
         return $default;
+    }
+
+    /**
+     * Retrieve a config value that is required
+     *
+     * Note: if a key exists, and its value is `null`, this will assume
+     * it is not intended and throw an exception
+     *
+     * @param string $key The key of the config value to retrieve
+     * @return mixed
+     */
+    public function getRequired(string $key)
+    {
+        $result = $this->get($key);
+        if ($result !== null) {
+            return $result;
+        }
+
+        throw new \sndsgd\config\exception\UndefinedKeyException($key);
     }
 
     /**
