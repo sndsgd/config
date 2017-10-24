@@ -34,6 +34,49 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @dataProvider provideGetRequiredException
+     * @expectedException sndsgd\config\exception\UndefinedKeyException
+     */
+    public function testGetRequiredException($values, $key)
+    {
+        $config = new Config();
+        $config->getRequired("does.not.exist");
+    }
+
+    public function provideGetRequiredException(): array
+    {
+        $values = ["null.value" => null];
+        return [
+            [$values, "does.not.exist"],
+            [$values, "null.value"],
+        ];
+    }
+
+    /**
+     * @dataProvider provideGetRequired
+     */
+    public function testGetRequired($values, $key, $expect)
+    {
+        $config = new Config($values);
+        $this->assertSame($expect, $config->getRequired($key));
+    }
+
+    public function provideGetRequired(): array
+    {
+        $values = [
+            "one" => 1,
+            "two" => [1, 2, 3],
+            "a.b.c" => "value",
+        ];
+
+        return [
+            [$values, "one", $values["one"]],
+            [$values, "two", $values["two"]],
+            [$values, "a.b.c", $values["a.b.c"]],
+        ];
+    }
+
     public function testCreateValue()
     {
         $createDefinitions = [
